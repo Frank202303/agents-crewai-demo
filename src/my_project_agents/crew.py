@@ -1,9 +1,28 @@
 from crewai import Agent, Crew, Process, Task
 from crewai.project import CrewBase, agent, crew, task
 from crewai.agents.agent_builder.base_agent import BaseAgent
+from crewai_tools import DirectoryReadTool, FileReadTool, SerperDevTool
+from my_project_agents.tools.custom_tool import SentimentAnalysisTool
+from crewai import LLM
+import os
 # If you want to run a snippet of code before or after the crew starts,
 # you can use the @before_kickoff and @after_kickoff decorators
 # https://docs.crewai.com/concepts/crews#example-crew-class-with-decorators
+from dotenv import load_dotenv
+load_dotenv()
+
+llm = LLM(
+    model="gemini-1.5-flash",
+    api_key=os.getenv("GEMINI_API_KEY")
+)
+
+# Frank: 那 LLM 到底在哪控制？
+# 👉 答案是：
+# ✔ 全局统一控制（最重要）
+# 在：
+# 👉 .env + provider setup
+
+# 你现在用的是“新版自动注入模式”: @CrewBase   旧版本需要：agent_config = './agents.yaml'
 
 @CrewBase
 class MyProjectAgents():
@@ -18,33 +37,44 @@ class MyProjectAgents():
     
     # If you would like to add tools to your agents, you can learn more about it here:
     # https://docs.crewai.com/concepts/agents#agent-tools
+    # 定义 Agent 1
     @agent
-    def researcher(self) -> Agent:
+    def sales_rep_agent(self) -> Agent:
         return Agent(
-            config=self.agents_config['researcher'], # type: ignore[index]
+            config=self.agents_config['sales_rep_agent'], # type: ignore[index]
+            llm=llm,
             verbose=True
         )
 
+    # 定义 Agent 2：lead_sales_rep_agent
     @agent
-    def reporting_analyst(self) -> Agent:
+    def lead_sales_rep_agent(self) -> Agent:
         return Agent(
-            config=self.agents_config['reporting_analyst'], # type: ignore[index]
+            config=self.agents_config['lead_sales_rep_agent'], # type: ignore[index]
+            llm=llm,
             verbose=True
         )
 
+    # 开始分配 任务
     # To learn more about structured task outputs,
     # task dependencies, and task callbacks, check out the documentation:
     # https://docs.crewai.com/concepts/tasks#overview-of-a-task
     @task
-    def research_task(self) -> Task:
+    def lead_profiling_task(self) -> Task:
         return Task(
-            config=self.tasks_config['research_task'], # type: ignore[index]
+            config=self.tasks_config['lead_profiling_task'], # type: ignore[index]
+            # 03: 使用什么工具
+            tools= [DirectoryReadTool(directory='./knowledge'), FileReadTool(), SerperDevTool()]  # SerperDevTool 是检索 工具（框架内置）
         )
 
     @task
-    def reporting_task(self) -> Task:
+    def personalized_outreach_task(self) -> Task:
         return Task(
-            config=self.tasks_config['reporting_task'], # type: ignore[index]
+            # 01：已经在task文件上指定agent了
+            #:02：要做什么事情
+            config=self.tasks_config['personalized_outreach_task'], # type: ignore[index]
+            # 03: 使用什么工具
+            tools= [SentimentAnalysisTool(), SerperDevTool()],
             output_file='report.md'
         )
 

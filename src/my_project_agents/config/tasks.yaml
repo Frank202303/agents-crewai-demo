@@ -1,17 +1,40 @@
-research_task:
+lead_profiling_task:
   description: >
-    Conduct a thorough research about {topic}
-    Make sure you find any interesting and relevant information given
-    the current year is {current_year}.
+    使用中文输出，
+    对目标公司{lead_name}进行详细分析，收集公司背景、业务模式、市场地位等信息。
+    该公司属于{industry}行业，最近对我们的解决方案表现出兴趣。
+    利用所有可用的数据·来源，
+    编写详细的公司资料，
+    重点关注关键决策者、近期业务发展，
+    以及与我们产品相匹配的潜在需求。
+    此任务对有效制定我们的互动策略至关重要。\n
+    不要做任何假设，只使用你绝对确信的信息.
   expected_output: >
-    A list with 10 bullet points of the most relevant information about {topic}
-  agent: researcher
+    使用中文输出
+    关于{lead_name}的综合报告，
+    包括公司背景、关键人员、近期里程碑和已识别需求。
+    突出我们解决方案可以提供价值的潜在领域，
+    并提出个性化的互动策略建议。
+  agent: sales_rep_agent
 
-reporting_task:
+
+
+personalized_outreach_task:
   description: >
-    Review the context you got and expand each topic into a full section for a report.
-    Make sure the report is detailed and contains any and all relevant information.
+    使用中文输出
+    使用从{lead_name}的潜在客户分析报告中收集的洞察， 
+    制定一个针对{lead_name}公司{position}的{key_decision_maker}的个性化外联活动。 
+    该活动应提及他们最近的{milestone},
+    以及我们的解决方案如何帮助他们实现目标。
+    你的沟通必须与{lead_name}公司的文化和价值观产生共鸣，
+    展示出对其业务和需求的深刻理。
+    不要做任何假设，只使用你绝对确信的信息.
   expected_output: >
-    A fully fledged report with the main topics, each with a full section of information.
-    Formatted as markdown without '```'
-  agent: reporting_analyst
+    使用中文输出 
+    一系列针对{lead_name}的个性化电子邮件草稿， 
+    特别是针对{key_decision_maker}的。
+    每份草稿应包含一个引人入胜的叙述，
+    将我们的解决方案与他们最近的成就和未来目标联系起来。
+    确保语气既有吸引力又专业，
+    并与{lead_name}的公司形象保持一致。
+  agent: lead_sales_rep_agent

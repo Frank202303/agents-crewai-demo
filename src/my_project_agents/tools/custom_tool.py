@@ -17,3 +17,13 @@ class MyCustomTool(BaseTool):
     def _run(self, argument: str) -> str:
         # Implementation goes here
         return "this is an example of a tool output, ignore it and move along."
+
+#    自定义 工具 
+class SentimentAnalysisTool(BaseTool):
+    name: str = "情感分析工具"
+    description: str = ("分析文本情感，"
+                        "以确保积极且具有吸引力的沟通。")
+    
+    # 伪代码： 做评分，如果不合格重新写
+    def _run(self, text:str) -> str:
+        return "积极"

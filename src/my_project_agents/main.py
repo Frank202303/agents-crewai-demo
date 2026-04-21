@@ -18,16 +18,21 @@ def run():
     Run the crew.
     """
     inputs = {
-        'topic': 'AI LLMs',
-        'current_year': str(datetime.now().year)
+        "lead_name":"MoPaas 魔泊云",
+        "industry": "人工智能科技",
+        "key_decision_maker": "鲁为民",
+        "position": "创始人",
+        "milestone": "吴文俊人工智能科学技术奖",  # 使用这些 信息去填占位符
     }
 
     try:
         MyProjectAgents().crew().kickoff(inputs=inputs)
     except Exception as e:
         raise Exception(f"An error occurred while running the crew: {e}")
+# 运行 这个 函数
+run()
 
-
+# 来“训练/优化 agent 行为”
 def train():
     """
     Train the crew for a given number of iterations.
@@ -42,6 +47,7 @@ def train():
     except Exception as e:
         raise Exception(f"An error occurred while training the crew: {e}")
 
+# 重放某一步任务（debug 用）
 def replay():
     """
     Replay the crew execution from a specific task.
@@ -52,6 +58,7 @@ def replay():
     except Exception as e:
         raise Exception(f"An error occurred while replaying the crew: {e}")
 
+# 用来做 自动评估
 def test():
     """
     Test the crew execution and returns the results.
@@ -67,6 +74,7 @@ def test():
     except Exception as e:
         raise Exception(f"An error occurred while testing the crew: {e}")
 
+# 给 Webhook / 自动化系统用的
 def run_with_trigger():
     """
     Run the crew with trigger payload.
