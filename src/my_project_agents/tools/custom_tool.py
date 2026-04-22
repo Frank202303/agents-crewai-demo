@@ -20,10 +20,9 @@ class MyCustomTool(BaseTool):
 
 #    自定义 工具 
 class SentimentAnalysisTool(BaseTool):
-    name: str = "情感分析工具"
-    description: str = ("分析文本情感，"
-                        "以确保积极且具有吸引力的沟通。")
+    name: str = "sentiment_analysis"   # 情感分析工具,name 必须是英语
+    description: str = ("Analyze sentiment of text and ensure positive tone")  #  description 必须是英语
     
     # 伪代码： 做评分，如果不合格重新写
     def _run(self, text:str) -> str:
-        return "积极"
+        return "positive"

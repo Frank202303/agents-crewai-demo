@@ -11,11 +11,15 @@ import os
 from dotenv import load_dotenv
 load_dotenv()
 
-llm = LLM(
-    model="gemini-1.5-flash",
-    api_key=os.getenv("GEMINI_API_KEY")
-)
+# https://docs.crewai.com/en/concepts/llms#google-gemini-api
 
+llm = LLM(
+    model="gemini-2.5-flash",
+    temperature=0.3
+    # api_key=os.getenv("GEMINI_API_KEY")
+)
+api_key=os.getenv("GOOGLE_API_KEY")
+# print(f" 我的key: {api_key}")
 # Frank: 那 LLM 到底在哪控制？
 # 👉 答案是：
 # ✔ 全局统一控制（最重要）
